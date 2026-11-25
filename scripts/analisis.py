@@ -1,9 +1,10 @@
 """Análisis posterior para el informe: combina los tiempos de GPU (Colab) y CPU (propio).
 
-Entradas (en resultados/):
+Entradas (en resultados/datos/):
     tiempos_gpu.csv, tiempos_cpu.csv, estadisticas_iteraciones.csv
 
-Salidas (en resultados/):
+Salidas (tablas .tex en resultados/tablas/, CSV en resultados/datos/,
+figuras en resultados/figuras/):
     tabla_cpu_gpu.csv/.tex        tiempos de todas las versiones
     tabla_speedup_cpu_gpu.csv/.tex  speedups de GPU respecto de CPU
     iteraciones_jax.csv/.tex      máximo global de iteraciones (lo que ejecuta vmap+while_loop)
@@ -14,7 +15,7 @@ Salidas (en resultados/):
 El máximo global de iteraciones se recalcula en CPU con la misma función JAX del notebook,
 porque las estadísticas de Colab se tomaron de los count del RawKernel.
 
-Uso:  python analisis.py [--sin-recalcular]
+Uso (desde la raíz del repo):  python scripts/analisis.py [--sin-recalcular]
 """
 import argparse
 import os
@@ -26,7 +27,10 @@ import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 
-R = "resultados"
+RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+FIGURAS = os.path.join(RAIZ, "resultados", "figuras")
+TABLAS = os.path.join(RAIZ, "resultados", "tablas")
+DATOS = os.path.join(RAIZ, "resultados", "datos")
 REGIONES = ["clasica", "frontera_central", "frontera_lateral"]
 TITULOS = {"clasica": "Clásica", "frontera_central": "Frontera central",
            "frontera_lateral": "Frontera lateral"}
@@ -39,15 +43,15 @@ plt.rcParams.update({
 
 
 def guardar(fig, nombre):
-    fig.savefig(os.path.join(R, nombre + ".png"), dpi=200)
-    fig.savefig(os.path.join(R, nombre + ".pdf"))
+    fig.savefig(os.path.join(FIGURAS, nombre + ".png"), dpi=200)
+    fig.savefig(os.path.join(FIGURAS, nombre + ".pdf"))
     plt.close(fig)
 
 
 def a_latex(df, nombre, fmt):
-    with open(os.path.join(R, nombre + ".tex"), "w") as f:
+    with open(os.path.join(TABLAS, nombre + ".tex"), "w") as f:
         f.write(df.to_latex(float_format=fmt, na_rep="--"))
-    df.to_csv(os.path.join(R, nombre + ".csv"))
+    df.to_csv(os.path.join(DATOS, nombre + ".csv"))
 
 
 def main():
@@ -56,9 +60,9 @@ def main():
                    help="no recalcula el máximo de iteraciones con JAX/NumPy en CPU")
     args = p.parse_args()
 
-    gpu = pd.read_csv(os.path.join(R, "tiempos_gpu.csv"))
-    cpu = pd.read_csv(os.path.join(R, "tiempos_cpu.csv"))
-    stats = pd.read_csv(os.path.join(R, "estadisticas_iteraciones.csv")).set_index(["region", "W"])
+    gpu = pd.read_csv(os.path.join(DATOS, "tiempos_gpu.csv"))
+    cpu = pd.read_csv(os.path.join(DATOS, "tiempos_cpu.csv"))
+    stats = pd.read_csv(os.path.join(DATOS, "estadisticas_iteraciones.csv")).set_index(["region", "W"])
 
     gpu = gpu[gpu.version != "NumPy (CPU Colab)"].copy()
     gpu["version"] = gpu["version"] + " (GPU)"
@@ -106,7 +110,7 @@ def main():
     guardar(fig, "tiempos_cpu_vs_gpu")
 
     # ------------------------------------------------------------ iteraciones de JAX
-    ruta_it = os.path.join(R, "iteraciones_jax.csv")
+    ruta_it = os.path.join(DATOS, "iteraciones_jax.csv")
     if args.sin_recalcular and os.path.exists(ruta_it):
         it = pd.read_csv(ruta_it).set_index(["region", "W"])
     else:

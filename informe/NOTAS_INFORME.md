@@ -1,6 +1,12 @@
 # Notas para el informe — Tarea 4
 
-Este documento reúne los datos y los puntos de análisis para redactar el informe en LaTeX. Todos los archivos citados están en `resultados/`. Cada tabla está en `.csv` y en `.tex` (formato `booktabs`, requiere `\usepackage{booktabs}`), y cada figura en `.png` y en `.pdf`. En LaTeX conviene usar los `.pdf`, que son vectoriales.
+Este documento reúne los datos y los puntos de análisis para redactar el informe en LaTeX. Los archivos citados están en `resultados/`:
+
+- **Figuras:** `resultados/figuras/`, en `.png` y en `.pdf`. En LaTeX conviene usar los `.pdf`, que son vectoriales.
+- **Tablas:** `resultados/tablas/`, en `.tex` con formato `booktabs` (requiere `\usepackage{booktabs}`).
+- **Datos:** `resultados/datos/`, en `.csv`, más los `.json` con la información del hardware.
+
+El notebook está en `entrega/` y los scripts en `scripts/`.
 
 ## 1. Recursos utilizados
 

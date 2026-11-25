@@ -1,12 +1,12 @@
 """Tarea 4 (d): tiempos de NumPy y JAX en un computador propio (CPU, sin GPU).
 
 Usa la misma grid, la misma referencia NumPy y la misma versión JAX que el notebook.
-Guarda resultados/tiempos_cpu.csv (se actualiza después de cada medición) y
-resultados/info_cpu.json.
+Guarda resultados/datos/tiempos_cpu.csv (se actualiza después de cada medición) y
+resultados/datos/info_cpu.json.
 
 Uso:
-    python benchmark_cpu.py                      # W = 1024 2048 4096 8192, 3 repeticiones
-    python benchmark_cpu.py --Ws 1024 2048 --reps 1
+    python scripts/benchmark_cpu.py              # W = 1024 2048 4096 8192, 3 repeticiones
+    python scripts/benchmark_cpu.py --Ws 1024 2048 --reps 1
 """
 import argparse
 import json
@@ -139,7 +139,8 @@ def main():
     p.add_argument("--Ws", type=int, nargs="+", default=[1024, 2048, 4096, 8192])
     p.add_argument("--reps", type=int, default=3)
     p.add_argument("--regiones", nargs="+", default=list(REGIONS))
-    p.add_argument("--salida", default="resultados")
+    p.add_argument("--salida", default=os.path.join(
+        os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "resultados", "datos"))
     args = p.parse_args()
 
     os.makedirs(args.salida, exist_ok=True)
