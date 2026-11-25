@@ -1,0 +1,22 @@
+\begin{tabular}{llrrrr}
+\toprule
+ &  & RawKernel vs NumPy CPU & RawKernel vs JAX CPU & JAX GPU vs JAX CPU & CuPy vect. vs NumPy CPU \\
+region & W &  &  &  &  \\
+\midrule
+\multirow[t]{4}{*}{clasica} & 1024 & 381.2 & 542.8 & 17.8 & 1.2 \\
+ & 2048 & 429.1 & 629.1 & 19.5 & 1.5 \\
+ & 4096 & 490.7 & 338.1 & 10.1 & 1.8 \\
+ & 8192 & 420.2 & 307.7 & 11.4 & 1.6 \\
+\cline{1-6}
+\multirow[t]{4}{*}{frontera_central} & 1024 & 412.4 & 494.6 & 18.7 & 1.5 \\
+ & 2048 & 471.4 & 554.6 & 19.8 & 1.9 \\
+ & 4096 & 468.7 & 319.1 & 11.4 & 1.8 \\
+ & 8192 & 407.6 & 289.7 & 12.9 & 1.8 \\
+\cline{1-6}
+\multirow[t]{4}{*}{frontera_lateral} & 1024 & 412.4 & 507.8 & 17.3 & 1.4 \\
+ & 2048 & 497.8 & 675.5 & 19.0 & 2.0 \\
+ & 4096 & 487.7 & 360.0 & 9.3 & 1.7 \\
+ & 8192 & 362.9 & 308.1 & 11.2 & 1.4 \\
+\cline{1-6}
+\bottomrule
+\end{tabular}

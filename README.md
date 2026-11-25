@@ -18,6 +18,7 @@ Plazo de entrega: **jueves 3 de diciembre de 2026, 23:59**.
 | `tarea04_template.ipynb` | Template original del curso, sin modificar |
 | `tarea04_completo.ipynb` | Notebook completo: preguntas (a)–(e), mediciones y figuras. Es el que se entrega |
 | `benchmark_cpu.py` | Tiempos de NumPy y JAX en un computador propio (CPU), pregunta (d) |
+| `analisis.py` | Combina los tiempos de CPU y GPU y recalcula el máximo de iteraciones de JAX. Genera tablas y figuras adicionales en `resultados/` |
 | `resultados/` | CSV de tiempos, estadísticas de iteraciones, tablas `.tex`, figuras `.png`/`.pdf` e información del hardware |
 | `NOTAS_INFORME.md` | Números clave y puntos de análisis para redactar el informe en LaTeX |
 
