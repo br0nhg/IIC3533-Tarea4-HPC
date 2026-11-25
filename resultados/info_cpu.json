@@ -1,0 +1,15 @@
+{
+  "python": "3.12.13",
+  "numpy": "2.5.5",
+  "jax": "0.12.1",
+  "sistema": "macOS-26.6.2-arm64-arm-64bit",
+  "cpu_nucleos_logicos": 10,
+  "jax_devices": [
+    "cpu:0"
+  ],
+  "cpu_modelo": "Apple M5",
+  "cpu_nucleos_fisicos": 10,
+  "cpu_nucleos_rendimiento": 4,
+  "cpu_nucleos_eficiencia": 6,
+  "ram_total_GB": 16.0
+}
