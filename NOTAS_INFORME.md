@@ -171,7 +171,9 @@ Las fuentes son `estadisticas_iteraciones.csv`, calculado con los `count` del Ra
    - El máximo lo alcanzan apenas 1 a 4 pixeles de toda la grid (columna `pixeles_en_max_jax`).
    - Con W más grande aparecen pixeles más "difíciles" cerca de la frontera fractal, así que el máximo global crece.
 4. **Relación con los tiempos.**
-   - El costo de JAX por pixel y por iteración del loop es casi constante: 0,11–0,16 ns (`ns_por_pixel_iter_jax`; `tiempo_vs_trabajo.pdf`, derecha). El tiempo de JAX es, entonces, proporcional a $W^2 \cdot \max \text{count}$.
+   - El tiempo de JAX por pixel es de 8–10 ns en todas las regiones y tamaños, unas 25–35 veces el del RawKernel (0,24–0,42 ns). Esto calza con que JAX ejecute unas 55–80 iteraciones por pixel, mientras que el RawKernel ejecuta unas 8–14 por warp.
+   - Al normalizar por el máximo global queda un costo de 0,12–0,16 ns por pixel e iteración (`ns_por_pixel_iter_jax`).
+   - La relación fina entre el tiempo y el máximo global exacto es débil (`tiempo_vs_trabajo.pdf`, derecha). Por ejemplo, la frontera central con $W=8192$ tiene el mayor máximo (82) pero no el mayor tiempo. Una explicación posible: el máximo se recalculó en CPU y en la GPU puede diferir en algunas iteraciones, porque depende de 1 a 4 pixeles al borde de la precisión. Conviene presentarlo con esa cautela.
    - La diferencia JAX/RawKernel (≈30× con $W=1024$ en la clásica) se descompone en dos factores:
      - **Iteraciones ejecutadas:** máximo global contra máximo por warp, $54/9,6 \approx 5,6\times$.
      - **Costo por iteración:** $0,163/0,029 \approx 5,7\times$.
